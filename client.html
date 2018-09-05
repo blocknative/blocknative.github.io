@@ -24,6 +24,9 @@
     <div class="container">
       <div class="row">
         <div class="col-xs-12">
+          <h1>Playing with BN.js</h1>
+          <br>
+          <br>
           <p>Web3 installed? <code id="web3-installed">(checking...)</code></p>
         </div>
       </div>
@@ -47,7 +50,7 @@
     <script src="https://bn-js.herokuapp.com/3rd/bn.js"></script>
     <script>
       $(function() {
-        $('#web3-installed').text(bnc.eth.hasWeb());
+        $('#web3-installed').text(_bnc.eth.hasWeb());
       });
     </script>
   </body>
