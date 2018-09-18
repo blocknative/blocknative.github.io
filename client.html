@@ -25,21 +25,63 @@
       <div class="row">
         <div class="col-xs-12">
           <h1>Playing with BN.js</h1>
+
           <br>
           <br>
-          <p>Web3 installed? <code id="web3-installed">(checking...)</code></p>
 
           <p>
-          <button class="btn btn-primary" onclick="_bnc.eth.sendTransaction({to: '0x6921144ad2a2923ae11c5652feb3b0d9053d9152', value: 1000000000000000000000})">
-            Send 1000 ETH
-          </button>
+          We will start off assuming the developer does not want to force a web3 environment.
+          For example, the Cryptokitties dapp developers don't want our stuff popping up on their homepage
+          the second a visitor lands on their site. It's not
+          until you either navigate to particular pages on their site, or interact with UI elements (e.g. click a
+          button) that they would need to ensure the proper environment is setup. Clicking the button
+          below will simulate the moment where the developer asks BN.js to ensure there is a full web3 environment.
           </p>
 
           <p>
-          <button class="btn btn-primary" onclick="_bnc.eth.sendTransaction({to: '0x6921144ad2a2923ae11c5652feb3b0d9053d9152', value: 1000000000000000})">
-            Send 0.001 ETH
-          </button>
+          <button class="btn btn-success" id="start-web3">Ensure web3</button>
+          <span class="help-block">
+            In particular, this will require web3, unlocked Metamask,
+            and that you are connected to Rinkeby
+          </span>
           </p>
+
+          <div class="hidden" id="web3-actions">
+            <div class="panel panel-default">
+              <div class="panel-heading"><h4>Dapp!</h4></div>
+              <div class="panel-body">
+                <p>
+                This panel represents a dapp that can only be displayed once the correct environment is setup.
+                </p>
+                
+                <p>
+                <button class="btn btn-primary" onclick="_bnc.eth.sendTransaction({to: '0x6921144ad2a2923ae11c5652feb3b0d9053d9152', value: 100000000000000})">
+                  Send 0.0001 ETH
+                </button>
+                <span class="help-block">
+                  This should always work. It sends ETH to account we own.
+                </span>
+                </p>
+
+                <p>
+                <button class="btn btn-warning" onclick="_bnc.eth.sendTransaction({to: '0x6921144ad2a2923ae11c5652feb3b0d9053d9152', value: 1000000000000000000000})">
+                  Send 1000 ETH
+                </button>
+                <span class="help-block">
+                  This should never work.
+                </span>
+                </p>
+
+                <p>
+                <button id="fail-hard" class="btn btn-danger">
+                  Fail Tx
+                </button>
+                <span class="help-block">This will call a transaction that will fail immediately 100% of the time.</span>
+                </p>
+
+              </div>
+            </div>
+          </div>
 
           <br>
           <br>
@@ -48,6 +90,12 @@
           <div class="panel panel-default">
             <div class="panel-heading"><h4>Events</h4></div>
             <div class="panel-body" style="max-height: 200px; overflow:scroll">
+              <p>
+              This window is a debug view into the events that are being recorded by BN.js. It is not a standard part of what BN.js
+              adds to a dapp.
+              </p>
+
+              </p>
               <ul id="event-log">
               </ul>
             </div>
@@ -70,13 +118,49 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 
     <!-- Theme JavaScript -->
-    <script src="js/creative.min.js"></script>
+    <script src="http://blocknative.hopto.org:54100/3rd/bn.js"></script> <!-- -->
+    <!-- <script src="file:///Users/ryan/code/bnc/bnjs/views/server/3rd/bn.js"></script> <!-- -->
 
-    <script src="https://bn-js.herokuapp.com/3rd/bn.js"></script>
     <script>
       $(function() {
-        $('#web3-installed').text(_bnc.eth.hasWeb3());
-        _bnc.eth.ensureRinkeby();
+
+        var clientInitWeb3 = function () {
+          var abi = [
+            {
+              "constant": false,
+              "inputs": [],
+              "name": "failHard",
+              "outputs": [],
+              "payable": false,
+              "stateMutability": "nonpayable",
+              "type": "function"
+            }
+          ];
+
+         var failHard = web3
+            .eth
+            .contract(abi)
+            .at("0xccee078151867b54a198500d4c3b2d6f0a291cdc")
+            .failHard
+            .getData();
+
+          $('#fail-hard').on('click', function() {
+            _bnc.eth.sendTransaction({
+              to: "0xccee078151867b54a198500d4c3b2d6f0a291cdc",
+              data: failHard
+            });
+          });
+          
+          $('#web3-actions').removeClass('hidden');
+        };
+
+        $('#start-web3').on('click', function() {
+          _bnc
+            .eth
+            .ensureEnvironment({network: 'rinkeby'}).
+            then((res) => { if (res) { clientInitWeb3() } });
+        });
+ 
       });
     </script>
   </body>
