@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,6 +14,30 @@
 
     <!-- Theme CSS -->
     <link href="css/creative.css" rel="stylesheet">
+
+    <script>
+      function debugLog(msg) {
+	var el = document.getElementById('event-log');
+
+	if (el) {
+	  var newEl = document.createElement('ul');
+	  newEl.innerHTML = "<li>" + msg + "</li>".trim();
+	  newEl = newEl.firstChild;
+
+	  el.appendChild(newEl);
+	}
+      };
+
+      window.onerror = function (message, file, line, col, error) {
+	debugLog("JS error occurred: " + error.message);
+	return false;
+      };
+      
+      window.addEventListener("error", function (e) {
+	 debugLog("JS error occurred: " + e.error.message);
+	 return false;
+      });
+    </script>
 
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda:400,900" rel="stylesheet">
   </head>
