@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BlockNative Test Client App</title>
+    <meta name="description" content="Digital natives are becoming block natives.">
+    <meta name="author" content="BlockNative">
+    <meta name="keywords" content="">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <script>
+      function debugLog(msg) {
+	var el = document.getElementById('event-log');
+
+	if (el) {
+	  var newEl = document.createElement('ul');
+	  newEl.innerHTML = "<li>" + msg + "</li>".trim();
+	  newEl = newEl.firstChild;
+
+	  el.appendChild(newEl);
+	}
+      };
+
+      window.onerror = function (message, file, line, col, error) {
+	debugLog("JS error occurred: " + error.message);
+	return false;
+      };
+      
+      window.addEventListener("error", function (e) {
+	 debugLog("JS error occurred: " + e.error.message);
+	 return false;
+      });
+    </script>
+  
+  </head>
+
+  <body id="page-top">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <h1>Playing with BN.js</h1>
+
+          <br>
+          <br>
+
+          <p>
+          We will start off assuming the developer does not want to force a web3 environment.
+          For example, the Cryptokitties dapp developers don't want our stuff popping up on their homepage
+          the second a visitor lands on their site. It's not
+          until you either navigate to particular pages on their site, or interact with UI elements (e.g. click a
+          button) that they would need to ensure the proper environment is setup. Clicking the button
+          below will simulate the moment where the developer asks BN.js to ensure there is a full web3 environment.
+          </p>
+
+          <p>
+          <button class="btn btn-success" id="start-web3">Ensure web3</button>
+          <span class="help-block">
+            In particular, this will require web3, unlocked Metamask,
+            and that you are connected to Rinkeby
+          </span>
+          </p>
+
+          <div class="hidden" id="web3-actions">
+            <div class="panel panel-default">
+              <div class="panel-heading"><h4>Dapp!</h4></div>
+              <div class="panel-body">
+                <p>
+                This panel represents a dapp that can only be displayed once the correct environment is setup.
+                </p>
+
+                <p>
+                Keep in mind that this page does not maintain state properly. It doesn't go out of it's way to remember
+                you and your transactions. If you reload this page in the middle of doing something, you'll see some
+                weird behavior where no messages will be displayed, and then if you do a new transaction, you may see
+                old messages pop up again. <b>TL;DR:</b> Don't reload the page :)
+                </p>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <p class="lead">
+                    Player #1 (You)
+                    </p>
+
+                    <p>
+                    <button class="btn btn-info" id="high-five-player-2">High Five Player #2</button>
+                    </p>
+
+                    <p>
+                    <button class="btn btn-info" id="vote-up-player-2">Vote Up Player #2</button>
+                    </p>
+                  </div>
+
+                  <div class="col-md-6">
+                    <p class="lead">
+                    Act as Player #2 (Not you)
+                    </p>
+
+                    <p>
+                    <button class="btn btn-info" id="get-high-five">Get a High Five from Player #2</button>
+                    </p>
+                    
+                    <p>
+                    <button class="btn btn-info" id="get-vote-up">Get Voted Up by Player #2</button>
+                    </p>
+
+                    <hr>
+                    
+                    <p>
+                    To enable testing of inbound notifications, these buttons will send a message to our servers,
+                    where there is another Ethereum wallet sitting on Rinkeby waiting to high five you and vote
+                    you up.
+                    </p>
+                  </div>
+                </div>
+              
+                <br>
+                <br> 
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <p class="lead">
+                    Generic Transactions
+                    </p>
+
+                    <p>
+                    <button class="btn btn-info" id="send-small">
+                      Send 0.0001 ETH
+                    </button>
+                    <span class="help-block">
+                      This should always work. It sends ETH to account we own.
+                    </span>
+                    </p>
+
+                    <p>
+                    <button class="btn btn-warning" id="send-large">
+                      Send 1000 ETH
+                    </button>
+                    <span class="help-block">
+                      This should never work.
+                    </span>
+                    </p>
+                  </div>
+
+                  <div class="col-md-6 hidden">
+                    <p class="lead">
+                    Get Rich Quick
+                    </p>
+
+                    <p>
+                    <button class="btn btn-info">Receive 0.001 ETH</button>
+                    </p>
+
+                    <hr>
+                    
+                    <p>
+                    Clicking this button will tell our Ethereum wallet to send you some Ether so you can
+                    see the inbound ETH notification.
+                    </p>
+                  </div>
+                </div>
+
+                <br>
+                <br>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <p class="lead">
+                    Test Failure Modes
+                    </p>
+
+                    <p>
+                    <button id="fail-hard" class="btn btn-danger">
+                      Fail Tx
+                    </button>
+                    <span class="help-block">This will call a transaction that will fail 100% of the time w/ a </code>REVERT</code>.</span>
+                    </p>
+
+                    <p>
+                    <button id="fail-oog" class="btn btn-danger">
+                      Run out of gas
+                    </button>
+                    <span class="help-block">This will call a transaction that will run out of gas.</span>
+                    </p>
+
+
+                    <p>
+                    <button id="fail-half" class="btn btn-danger">
+                      Fail sometimes
+                    </button>
+                    <span class="help-block">This will call a transaction that will fail 50% of the time. It will fail if the block number it tries to get into is odd.</span>
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <br>
+          <br>
+          <br>
+
+          <div class="panel panel-default">
+            <div class="panel-heading"><h4>Events</h4></div>
+            <div class="panel-body" style="max-height: 200px; overflow:scroll">
+              <p>
+              This window is a debug view into the events that are being recorded by BN.js. It is not a standard part of what BN.js
+              adds to a dapp.
+              </p>
+
+              </p>
+              <ul id="event-log">
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <br><br><br><br><br>
+
+    <footer>
+      <div class="container text-center">
+        <p style="color: #9B9B9B;">Ⓒ BlockNative Corporation 2018</p>
+      </div>
+    </footer>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+    <script>
+      $(function() {
+
+        var clientInitWeb3 = function () {
+          var caddr = "0x9e7ae8c4d07670df36fdb88c1b3ae06dc4625fa0";
+          var abi = [{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"votes","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"anonymous":false,"inputs":[{"indexed":false,"name":"_sender","type":"address"},{"indexed":false,"name":"_recipient","type":"address"}],"name":"HighFive","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"_voter","type":"address"},{"indexed":false,"name":"_recipient","type":"address"},{"indexed":false,"name":"_voteTotal","type":"uint256"}],"name":"VoteUp","type":"event"},{"constant":false,"inputs":[],"name":"failHard","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"failOOG","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"failHalf","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_recipient","type":"address"}],"name":"highFive","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_recipient","type":"address"}],"name":"voteUp","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}];
+
+          var failureContract = web3
+            .eth
+            .contract(abi)
+            .at(caddr);
+
+          var failHard = failureContract
+            .failHard
+            .getData();
+
+          $('#high-five-player-2').on('click', function() {
+            _bnc.eth.sendTransaction({
+              to: failureContract.address,
+              data: failureContract.highFive.getData("0xd116a00ff02299f40b4fcaf9b0d8f8f8619f59b7")
+            });
+          });
+
+          $('#vote-up-player-2').on('click', function() {
+            _bnc.eth.sendTransaction({
+              to: failureContract.address,
+              data: failureContract.voteUp.getData("0xd116a00ff02299f40b4fcaf9b0d8f8f8619f59b7")
+            });
+          });
+
+          $('#fail-hard').on('click', function() {
+            _bnc.eth.sendTransaction({
+              to: failureContract.address,
+              data: failureContract.failHard.getData()
+            },
+            null,
+            {
+              messages: {
+                "pending": "Your always-fail transaction is in the mempool!",
+                "confirmed": "This should not happen. End of days! Run!",
+                "failed": "Failing contracts fail hard. 🤠"
+              }
+            });
+          });
+ 
+          $('#fail-oog').on('click', function() {
+            _bnc.eth.sendTransaction({
+              to: failureContract.address,
+              data: failureContract.failOOG.getData()
+            },
+            null,
+            {
+              messages: {
+                "pending": "Your out of gas transaction is in the mempool!",
+                "confirmed": "This should not happen. End of days! Run!",
+                "failed": "NEED MOAR GAS PLZ. ⛽️"
+              }
+            });
+          });
+ 
+          $('#fail-half').on('click', function() {
+            _bnc.eth.sendTransaction({
+              to: failureContract.address,
+              data: failureContract.failHalf.getData()
+            },
+            null,
+            {
+              messages: {
+                "pending": "Your half-fail transaction is in the mempool!",
+                "confirmed": "Lucky lucky! 🎲",
+                "failed": "Unlucky. Sad."
+              }
+            });
+          });
+          
+          $('#send-small').on('click', function() {
+            _bnc
+              .eth
+              .sendTransaction(
+                  {to: '0x6921144ad2a2923ae11c5652feb3b0d9053d9152', value: 100000000000000},
+                  null,
+                  {
+                    messages: {
+                      "pending": "Your payment is on it's way!",
+                      "confirmed": "Your payment of 0.0001ETH is complete!",
+                      "failed": "Your payment failed. 😣"
+                    }
+                  })
+          });
+
+          $('#send-large').on('click', function() {
+            _bnc
+              .eth
+              .sendTransaction(
+                  {to: '0x6921144ad2a2923ae11c5652feb3b0d9053d9152', value: 1000000000000000000000},
+                  null,
+                  {
+                    messages: {
+                      "pending": "Your payment is on the way, high roller!",
+                      "confirmed": "Your payment of 1000ETH is complete! (Big spender!)",
+                      "failed": "Your payment failed. 😣"
+                    }
+                  })
+          });
+
+          _bnc.eth.registerEvent({
+            address: failureContract.address,
+            abi: failureContract.abi,
+            event: 'HighFive',
+            target: '_recipient',
+            targetAddress: web3.eth.defaultAccount,
+            message: "You were high fived by someone! " +
+              "<a href=\"/users/{_sender}\" target=\"_blank\">View who high fived you!</a>"
+          });
+
+          $('#web3-actions').removeClass('hidden');
+
+          $('#get-high-five').on('click', function() {
+            $.ajax({
+              type: 'POST',
+              url: 'https://bn-js.herokuapp.com/api/high_five',
+              data: {recipient_id: web3.eth.defaultAccount}
+            });
+          });
+
+          $('#get-vote-up').on('click', function() {
+            $.ajax({
+              type: 'POST',
+              url: 'https://bn-js.herokuapp.com/api/vote_up',
+              data: {recipient_id: web3.eth.defaultAccount}
+            });
+          });
+        };
+
+        $('#start-web3').on('click', function() {
+          _bnc
+            .eth
+            .ensureEnvironment({network: 'rinkeby'}).
+            then((res) => { if (res) { clientInitWeb3() } });
+        });
+ 
+      });
+    </script>
+  <script type="text/javascript" src="https://bn-js.herokuapp.com/dist/bn.js"></script></body>
+</html>
