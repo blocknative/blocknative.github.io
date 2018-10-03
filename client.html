@@ -10,10 +10,8 @@
     <meta name="keywords" content="">
 
     <!-- Bootstrap Core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Theme CSS -->
-    <link href="css/creative.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
     <script>
       function debugLog(msg) {
@@ -38,8 +36,7 @@
 	 return false;
       });
     </script>
-
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda:400,900" rel="stylesheet">
+  
   </head>
 
   <body id="page-top">
@@ -84,30 +81,122 @@
                 old messages pop up again. <b>TL;DR:</b> Don't reload the page :)
                 </p>
 
-                <p>
-                <button class="btn btn-primary" id="send-small">
-                  Send 0.0001 ETH
-                </button>
-                <span class="help-block">
-                  This should always work. It sends ETH to account we own.
-                </span>
-                </p>
+                <div class="row">
+                  <div class="col-md-6">
+                    <p class="lead">
+                    Player #1 (You)
+                    </p>
 
-                <p>
-                <button class="btn btn-warning" id="send-large">
-                  Send 1000 ETH
-                </button>
-                <span class="help-block">
-                  This should never work.
-                </span>
-                </p>
+                    <p>
+                    <button class="btn btn-info" id="high-five-player-2">High Five Player #2</button>
+                    </p>
 
-                <p>
-                <button id="fail-hard" class="btn btn-danger">
-                  Fail Tx
-                </button>
-                <span class="help-block">This will call a transaction that will fail immediately 100% of the time.</span>
-                </p>
+                    <p>
+                    <button class="btn btn-info" id="vote-up-player-2">Vote Up Player #2</button>
+                    </p>
+                  </div>
+
+                  <div class="col-md-6">
+                    <p class="lead">
+                    Act as Player #2 (Not you)
+                    </p>
+
+                    <p>
+                    <button class="btn btn-info" id="get-high-five">Get a High Five from Player #2</button>
+                    </p>
+                    
+                    <p>
+                    <button class="btn btn-info" id="get-vote-up">Get Voted Up by Player #2</button>
+                    </p>
+
+                    <hr>
+                    
+                    <p>
+                    To enable testing of inbound notifications, these buttons will send a message to our servers,
+                    where there is another Ethereum wallet sitting on Rinkeby waiting to high five you and vote
+                    you up.
+                    </p>
+                  </div>
+                </div>
+              
+                <br>
+                <br> 
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <p class="lead">
+                    Generic Transactions
+                    </p>
+
+                    <p>
+                    <button class="btn btn-info" id="send-small">
+                      Send 0.0001 ETH
+                    </button>
+                    <span class="help-block">
+                      This should always work. It sends ETH to account we own.
+                    </span>
+                    </p>
+
+                    <p>
+                    <button class="btn btn-warning" id="send-large">
+                      Send 1000 ETH
+                    </button>
+                    <span class="help-block">
+                      This should never work.
+                    </span>
+                    </p>
+                  </div>
+
+                  <div class="col-md-6 hidden">
+                    <p class="lead">
+                    Get Rich Quick
+                    </p>
+
+                    <p>
+                    <button class="btn btn-info">Receive 0.001 ETH</button>
+                    </p>
+
+                    <hr>
+                    
+                    <p>
+                    Clicking this button will tell our Ethereum wallet to send you some Ether so you can
+                    see the inbound ETH notification.
+                    </p>
+                  </div>
+                </div>
+
+                <br>
+                <br>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <p class="lead">
+                    Test Failure Modes
+                    </p>
+
+                    <p>
+                    <button id="fail-hard" class="btn btn-danger">
+                      Fail Tx
+                    </button>
+                    <span class="help-block">This will call a transaction that will fail 100% of the time w/ a </code>REVERT</code>.</span>
+                    </p>
+
+                    <p>
+                    <button id="fail-oog" class="btn btn-danger">
+                      Run out of gas
+                    </button>
+                    <span class="help-block">This will call a transaction that will run out of gas.</span>
+                    </p>
+
+
+                    <p>
+                    <button id="fail-half" class="btn btn-danger">
+                      Fail sometimes
+                    </button>
+                    <span class="help-block">This will call a transaction that will fail 50% of the time. It will fail if the block number it tries to get into is odd.</span>
+                    </p>
+                  </div>
+                </div>
 
               </div>
             </div>
@@ -136,6 +225,7 @@
     </div>
 
     <br><br><br><br><br>
+
     <footer>
       <div class="container text-center">
         <p style="color: #9B9B9B;">Ⓒ BlockNative Corporation 2018</p>
@@ -147,38 +237,56 @@
     <!-- Plugin JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 
-    <!-- Theme JavaScript -->
-    <script src="http://blocknative.hopto.org:54100/3rd/bn.js"></script> <!-- -->
-    <!-- <script src="file:///Users/ryan/code/bnc/bnjs/views/server/3rd/bn.js"></script>  -->
-
-
     <script>
       $(function() {
 
         var clientInitWeb3 = function () {
-          var abi = [
-            {
-              "constant": false,
-              "inputs": [],
-              "name": "failHard",
-              "outputs": [],
-              "payable": false,
-              "stateMutability": "nonpayable",
-              "type": "function"
-            }
-          ];
+          var caddr = "0x9e7ae8c4d07670df36fdb88c1b3ae06dc4625fa0";
+          var abi = [{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"votes","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"anonymous":false,"inputs":[{"indexed":false,"name":"_sender","type":"address"},{"indexed":false,"name":"_recipient","type":"address"}],"name":"HighFive","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"_voter","type":"address"},{"indexed":false,"name":"_recipient","type":"address"},{"indexed":false,"name":"_voteTotal","type":"uint256"}],"name":"VoteUp","type":"event"},{"constant":false,"inputs":[],"name":"failHard","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"failOOG","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"failHalf","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_recipient","type":"address"}],"name":"highFive","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_recipient","type":"address"}],"name":"voteUp","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}];
 
-         var failHard = web3
+          var failureContract = web3
             .eth
             .contract(abi)
-            .at("0xccee078151867b54a198500d4c3b2d6f0a291cdc")
+            .at(caddr);
+
+          var failHard = failureContract
             .failHard
             .getData();
 
+          $('#high-five-player-2').on('click', function() {
+            _bnc.eth.sendTransaction({
+              to: failureContract.address,
+              data: failureContract.highFive.getData("0xd116a00ff02299f40b4fcaf9b0d8f8f8619f59b7")
+            },
+            null,
+            {
+              messages: {
+                "pending": "High five on the way!",
+                "confirmed": "You high fived them! That was awesome.",
+                "failed": "High Five? More like High Fail. Sad."
+              }
+            });
+          });
+
+          $('#vote-up-player-2').on('click', function() {
+            _bnc.eth.sendTransaction({
+              to: failureContract.address,
+              data: failureContract.voteUp.getData("0xd116a00ff02299f40b4fcaf9b0d8f8f8619f59b7")
+            },
+            null,
+            {
+              messages: {
+                "pending": "Voting them up...",
+                "confirmed": "Voted up!",
+                "failed": "Vote up failed. Shouldn't have happened, man!"
+              }
+            });
+          });
+
           $('#fail-hard').on('click', function() {
             _bnc.eth.sendTransaction({
-              to: "0xccee078151867b54a198500d4c3b2d6f0a291cdc",
-              data: failHard
+              to: failureContract.address,
+              data: failureContract.failHard.getData()
             },
             null,
             {
@@ -186,6 +294,36 @@
                 "pending": "Your always-fail transaction is in the mempool!",
                 "confirmed": "This should not happen. End of days! Run!",
                 "failed": "Failing contracts fail hard. 🤠"
+              }
+            });
+          });
+ 
+          $('#fail-oog').on('click', function() {
+            _bnc.eth.sendTransaction({
+              to: failureContract.address,
+              data: failureContract.failOOG.getData()
+            },
+            null,
+            {
+              messages: {
+                "pending": "Your out of gas transaction is in the mempool!",
+                "confirmed": "This should not happen. End of days! Run!",
+                "failed": "NEED MOAR GAS PLZ. ⛽️"
+              }
+            });
+          });
+ 
+          $('#fail-half').on('click', function() {
+            _bnc.eth.sendTransaction({
+              to: failureContract.address,
+              data: failureContract.failHalf.getData()
+            },
+            null,
+            {
+              messages: {
+                "pending": "Your half-fail transaction is in the mempool!",
+                "confirmed": "Lucky lucky! 🎲",
+                "failed": "Unlucky. Sad."
               }
             });
           });
@@ -220,8 +358,33 @@
                   })
           });
 
+          _bnc.eth.registerEvent({
+            address: failureContract.address,
+            abi: failureContract.abi,
+            event: 'HighFive',
+            target: '_recipient',
+            targetAddress: web3.eth.defaultAccount,
+            message: "You were high fived by someone! " +
+              "<a href=\"/users/{_sender}\" target=\"_blank\">View who high fived you!</a>"
+          });
 
           $('#web3-actions').removeClass('hidden');
+
+          $('#get-high-five').on('click', function() {
+            $.ajax({
+              type: 'POST',
+              url: 'https://bn-js.herokuapp.com/api/high_five',
+              data: {recipient_id: web3.eth.defaultAccount}
+            });
+          });
+
+          $('#get-vote-up').on('click', function() {
+            $.ajax({
+              type: 'POST',
+              url: 'https://bn-js.herokuapp.com/api/vote_up',
+              data: {recipient_id: web3.eth.defaultAccount}
+            });
+          });
         };
 
         $('#start-web3').on('click', function() {
@@ -233,5 +396,6 @@
  
       });
     </script>
+    <script type="text/javascript" src="https://bn-js.herokuapp.com/dist/bn.js"></script>
   </body>
 </html>
