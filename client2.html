@@ -257,6 +257,14 @@
             _bnc.eth.sendTransaction({
               to: failureContract.address,
               data: failureContract.highFive.getData("0xd116a00ff02299f40b4fcaf9b0d8f8f8619f59b7")
+            },
+            null,
+            {
+              messages: {
+                "pending": "High five on the way!",
+                "confirmed": "You high fived them! That was awesome.",
+                "failed": "High Five? More like High Fail. Sad."
+              }
             });
           });
 
@@ -264,6 +272,14 @@
             _bnc.eth.sendTransaction({
               to: failureContract.address,
               data: failureContract.voteUp.getData("0xd116a00ff02299f40b4fcaf9b0d8f8f8619f59b7")
+            },
+            null,
+            {
+              messages: {
+                "pending": "Voting them up...",
+                "confirmed": "Voted up!",
+                "failed": "Vote up failed. Shouldn't have happened, man!"
+              }
             });
           });
 
@@ -380,5 +396,5 @@
  
       });
     </script>
-  <script type="text/javascript" src="https://bn-js.herokuapp.com/dist/bn.js"></script></body>
+    <script type="text/javascript" src="https://bn-js.herokuapp.com/dist/bn.js"></script></body>
 </html>
