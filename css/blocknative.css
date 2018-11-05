@@ -199,7 +199,7 @@ body{
 }
 
 section#developer-benefits{
-  background: #FFEB3B url('../img/developer-bg-768.jpg') repeat center top;
+  background: #CBE49B url('../img/developer-bg-768.jpg') repeat center top;
   text-align: center;
   clear: both;
   position: relative;
@@ -377,7 +377,7 @@ footer{
     margin-bottom: 40px;
   }
   section#developer-benefits{
-    background: #FFEB3B url('../img/developer-bg-1440.jpg') no-repeat center top;
+    background: #CBE49B url('../img/developer-bg-1440.jpg') no-repeat center top;
   }
 }
 
