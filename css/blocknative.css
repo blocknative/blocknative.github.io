@@ -33,11 +33,11 @@ a {
   -webkit-transition: all 0.35s;
   -moz-transition: all 0.35s;
   transition: all 0.35s;
-  color: #0E5AFF;
+  color: #26C6DA;
 }
 a:hover,
 a:focus {
-  color: #09379C;
+  color: #00BCD4;
 }
 h1, .h1,
 h2, .h2,
@@ -98,6 +98,10 @@ ul,ol{
   font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
 }
 
+ul li, ol li{
+  margin-bottom: 10px;
+}
+
 .btn{
   font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
   margin-bottom: 10px;
@@ -106,30 +110,30 @@ ul,ol{
 /* Buttons */
 
 .btn-primary{
-  background: #0E5AFF;
-  border: #0E5AFF;
+  background: #26C6DA;
+  border: #26C6DA;
   color: #fff;
   box-shadow: 0 2px 4px 0 rgba(100,100,100,.50);
   margin-right: 15px;
 }
 
 .btn-primary:hover, .btn-secondary:active{
-  background: #09379C;
-  border: #09379C;
+  background: #00BCD4;
+  border: #00BCD4;
   color: #fff;
 }
 
 .btn-secondary{
   background: #fff;
   border: #fff;
-  color: #FFB300;
+  color: #8BC34A;
   box-shadow: 0 2px 4px 0 rgba(100,100,100,.50);
   margin-right: 15px;
 }
 
 .btn-secondary:hover, .btn-secondary:active{
-  background: #FFB300;
-  border: #FFB300;
+  background: #8BC34A;
+  border: #8BC34A;
   color: #fff;
 }
 
@@ -169,7 +173,8 @@ body{
 }
 
 .top-news span{
-  background: #0E5AFF;
+  background: #FFD700;
+  color: #072A44;
   border-radius: 100px;
   padding: 2px 8px;
   margin-right: 5px;
@@ -250,7 +255,6 @@ section#developer-benefits ul{
 
 .team-bio-block img{
   float: left;
-  margin: -40px;
 }
 
 .team-bio-block p:last-of-type{
