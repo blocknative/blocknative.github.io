@@ -5,15 +5,26 @@ Outline
 1. Basic Setup
 2. Page Utilities
 3. Images
+4. Tabs
+5. Buttons
+6. Pages
+  6.1 Homepage
+  6.2 Demo
+7. Forms
+8. Media Size Adjustments
 
-Colors
-Blue - #0E5AFF
-Yellow - #FEE935
+
+Colors=====
+Red - #F44336/#E53935
+Purple - #AB47BC/#9C27B0
+Blue - #26C6DA/#00BCD4
+Green - 8BC34A/#7BB343
+Yellow - #FFD700/#FFC107
 
 */
 
 
-
+/* 1 Basic Setup */
 html,
 body {
   height: 100%;
@@ -22,9 +33,7 @@ body {
   font-family: Open Sans, Segoe UI, sans-serif;
 }
 hr {
-  border-color: #F05F40;
-  border-width: 3px;
-  max-width: 50px;
+  border-color: #F1F7FB;
 }
 hr.light {
   border-color: white;
@@ -50,10 +59,11 @@ h6, .h6 {
   color: #072A44;
 }
 
-h1, .h1{font-size: 36.49;}
-h2, .h2{font-size: 32.44;}
-h3, .h3{font-size: 25.63;}
-h4, .h4{font-size: 22.78;}
+/* all font sizes follow a minor second scale -https://www.modularscale.com/?16&px&1.125 */
+h1, .h1{font-size: 36.49px;}
+h2, .h2{font-size: 32.44px;}
+h3, .h3{font-size: 25.63px;}
+h4, .h4{font-size: 22.78px;}
 p {
   font-size: 16px;
   line-height: 1.5;
@@ -70,6 +80,12 @@ p.heading1{
   font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 700;
   text-transform: uppercase;
+}
+
+p.heading1-regular{
+  font-size: 18px;
+  font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 700;
 }
 
 @media (max-width: 768px) {
@@ -102,22 +118,60 @@ ul li, ol li{
   margin-bottom: 10px;
 }
 
+footer{
+  text-align: center;
+}
+
+/* 3. Images */
+
+/* 4. Tabs */
+
+.bn-tabs{
+  background: #F8F9FA;
+  border-radius: 4px;
+  overflow: hidden;
+  display: inline-flex;
+}
+.bn-tabs li{
+  margin: 0px;
+}
+.bn-tabs li a{
+  padding: 7px 30px;
+  border-bottom: 3px solid transparent;
+  color: #80868C;
+}
+.bn-tabs li a:hover{
+  color: #26C6DA;
+  background: #F1F3F4
+}
+.bn-tabs li a.active{
+  border-bottom: 3px solid #26C6DA;
+  color: #26C6DA;
+  font-weight: bold;
+}
+
+/* 5. Buttons */
+
 .btn{
   font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
   margin-bottom: 10px;
 }
 
-/* Buttons */
+.btn-margin{
+  margin-right: 15px;
+}
+
+.btn-shadow{
+  box-shadow: 0 2px 4px 0 rgba(100,100,100,.50);
+}
 
 .btn-primary{
   background: #26C6DA;
   border: #26C6DA;
   color: #fff;
-  box-shadow: 0 2px 4px 0 rgba(100,100,100,.50);
-  margin-right: 15px;
 }
 
-.btn-primary:hover, .btn-secondary:active{
+.btn-primary:hover, .btn-primary:active,.btn-primary:focus{
   background: #00BCD4;
   border: #00BCD4;
   color: #fff;
@@ -127,13 +181,40 @@ ul li, ol li{
   background: #fff;
   border: #fff;
   color: #8BC34A;
-  box-shadow: 0 2px 4px 0 rgba(100,100,100,.50);
-  margin-right: 15px;
 }
 
-.btn-secondary:hover, .btn-secondary:active{
+.btn-secondary:hover, .btn-secondary:active,.btn-secondary:focus{
   background: #8BC34A;
   border: #8BC34A;
+  color: #fff;
+}
+
+.btn-success{
+  background: #8BC34A;
+  border: #8BC34A;
+  color: #FFF;
+}
+
+.btn-success:hover, .btn-success:active,.btn-success:focus{
+  background: #7BB343;
+  border: #7BB343;
+  color: #fff;
+}
+.btn-success.disabled{
+  background: #ABC988;
+  border: #ABC988;
+}
+
+
+.btn-default{
+  background: #E8EAED;
+  border: #E8EAED;
+  color: #5F6368;
+}
+
+.btn-default:hover, .btn-default:active,.btn-default:focus{
+  background: #5F6368;
+  border: #5F6368;
   color: #fff;
 }
 
@@ -144,15 +225,26 @@ ul li, ol li{
   padding: 75px 0px;
 }
 
-body{
-  background: #fff url('../img/home-problem-bg.jpg') no-repeat -342px -100px;
+.white-block-padded{
+  background: #fff;
+  padding: 50px 15px;
+  box-shadow: 0 2px 50px rgba(0,0,0,.2);
+}
+.white-block-cta-footer{
+  background: #F8FDEE;
+  border-top: 1px solid #8BC34A;
+  padding: 30px 15px;
+}
+.white-block-cta-footer p:last-of-type{
+  margin-bottom: 0px;
 }
 
-/*img#opening-block{
-  position: absolute;
-  top: 620px;
-  left: 25px;
-}*/
+/* 6. Pages */
+/* 6.1 Homepage */
+
+body{ /* need to fix so not on every body page */
+  background: #fff url('../img/home-problem-bg.jpg') no-repeat -342px -100px;
+}
 
 #the-problem{
   padding-top: 70px;
@@ -237,10 +329,10 @@ section#developer-benefits ul{
   text-align: left;
 }
 
-
+/* Team */
 
 #team{
-  background: #FFFAE5 url('../img/team-bg.jpg') repeat center top;
+  background: #F5FAE9 url('../img/team-bg.jpg') repeat center top;
   position: relative;
 }
 
@@ -297,10 +389,8 @@ section#team::after{
   z-index: 1;
 }
 
-footer{
-  text-align: center;
-}
 
+/* Signup Form */
 .signup-form{
   position: relative;
   display: inline-block;
@@ -322,16 +412,65 @@ footer{
   right: 0px;
 }
 
-/* Media Size Adjustments */
+/* 6.2 Demo */
+.fas.fa-check{
+  color: #8BC34A;
+  font-size: 25.63px;
+  width: 25px;
+  text-align: center;
+  vertical-align: top;
+}
+.fas.fa-times{
+  color: #F44336;
+  font-size: 28.83px;
+  width: 25px;
+  text-align: center;
+  vertical-align: top;
+}
+
+.demo-list p{
+  float: left;
+  margin-bottom: 10px;
+  margin-top: 4px;
+}
+
+.demo-list .fas{
+  display: inline-block;
+}
+.demo-list .fas.fa-check{
+  float: left;
+  margin-right: 10px;
+}
+.demo-list .fas.fa-times{
+  float: left;
+  margin-right: 10px;
+}
+
+
+/* 7. Forms */
+
+::-moz-placeholder, ::-webkit-input-placeholder, :-ms-input-placeholder, ::placeholder {
+    color: #9B9B9B;
+    font-family: 'Source Sans Pro', 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+}
+
+
+/* 8. Media Size Adjustments */
 
 @media (min-width: 576px) {
  body{
     background-position: -342px -300px;
   }
-/*  img#opening-block{
-    top: 620px;
-    left: 25px;
-  }*/
+}
+
+
+@media (max-width: 992px) {
+  .btn-mobile-float-left{
+    float: left !important;
+  }
+  .demo-list p{
+    float: none;
+  }
 }
 
 @media (min-width: 768px) {
@@ -344,10 +483,6 @@ footer{
   .signup-form{
     width: 80%;
   }
-/*  img#opening-block{
-    top: 406px;
-    left: 485px;
-  }*/
   #introduction img.info-icon{
     float: left;
     margin-left: -32.5px;
@@ -363,16 +498,18 @@ footer{
   section#team::after, section#developer-benefits::after{
     height: 195px;
   }
+  .white-block-padded{
+    padding: 50px;
+  }
+  .white-block-cta-footer{
+    padding: 30px 50px;
+  }
 }
 
 @media (min-width: 992px) {
   body{
     background-position: -508px -370px;
   }
-/*  img#opening-block{
-    top: 118px;
-    left: 600px;
-  }*/
   .team-bio-block{
     margin-bottom: 40px;
   }
@@ -388,10 +525,6 @@ footer{
   .problem-spacing{
     padding-left: 68px;
   }
-/*  img#opening-block{
-    top: 118px;
-    left: 915px;
-  }*/
   #introduction{
     margin-top: 20px;
   }
@@ -405,12 +538,4 @@ footer{
   section#team::after, section#developer-benefits::after{
     height: 355px;
   }
-
-}
-
-/* Forms */
-
-::-moz-placeholder, ::-webkit-input-placeholder, :-ms-input-placeholder, ::placeholder {
-    color: #9B9B9B;
-    font-family: 'Source Sans Pro', 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
 }
