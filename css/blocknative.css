@@ -242,8 +242,8 @@ footer{
 /* 6. Pages */
 /* 6.1 Homepage */
 
-body{ /* need to fix so not on every body page */
-  background: #fff url('../img/home-problem-bg.jpg') no-repeat -342px -100px;
+body#big-block{
+  background: #fff url('../img/home-problem-bg.jpg') no-repeat -400px 0px;
 }
 
 #the-problem{
@@ -458,8 +458,20 @@ section#team::after{
 /* 8. Media Size Adjustments */
 
 @media (min-width: 576px) {
- body{
-    background-position: -342px -300px;
+  body#big-block{
+    background-position: -200px 0px;
+  }
+}
+@media (max-width: 576px) {
+  .bn-tabs li{
+    width: 100%;
+  }
+  .bn-tabs li a{
+    display: block;
+    text-align: center;
+  }
+  .system-block-img{
+    max-width: 170px;
   }
 }
 
@@ -474,8 +486,8 @@ section#team::after{
 }
 
 @media (min-width: 768px) {
-  body{
-    background-position: -700px -300px;
+  body#big-block{
+    background-position: -200px 0px;
   }
   .top-news{
     padding: 4px 8px 4px 5px;
@@ -507,8 +519,8 @@ section#team::after{
 }
 
 @media (min-width: 992px) {
-  body{
-    background-position: -508px -370px;
+  body#big-block{
+    background-position: -100px 0px;
   }
   .team-bio-block{
     margin-bottom: 40px;
@@ -519,9 +531,10 @@ section#team::after{
 }
 
 @media (min-width: 1200px) {
-  body{
-    background-position: -342px -370px;
+  body#big-block{
+    background-position: 0px 0px;
   }
+
   .problem-spacing{
     padding-left: 68px;
   }
